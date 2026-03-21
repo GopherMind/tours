@@ -1,10 +1,30 @@
 import { Button, Menu } from "antd";
+import ShieldCheckIcon from "@heroicons/react/24/solid/ShieldCheckIcon";
+
 export default function HeaderMobileMenu({
   menuItems,
   onNavigate,
   onContact,
   isOpen,
+  isAdmin,
 }) {
+  const allItems = [
+    ...menuItems,
+    ...(isAdmin
+      ? [
+          {
+            key: "/admin",
+            label: (
+              <span className="flex items-center gap-1.5 text-yellow-300">
+                <ShieldCheckIcon className="w-4 h-4" />
+                Admin
+              </span>
+            ),
+          },
+        ]
+      : []),
+  ];
+
   return (
     <div
       className={`md:hidden w-full overflow-hidden transition-all duration-300 ${
@@ -15,7 +35,7 @@ export default function HeaderMobileMenu({
     >
       <Menu
         mode="vertical"
-        items={menuItems}
+        items={allItems}
         className="border-none !bg-transparent text-white"
         onClick={(e) => onNavigate(e.key)}
       />
@@ -35,4 +55,3 @@ export default function HeaderMobileMenu({
     </div>
   );
 }
-

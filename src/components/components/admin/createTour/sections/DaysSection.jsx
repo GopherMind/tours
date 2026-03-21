@@ -1,10 +1,12 @@
 import { Section } from "../tourFormHelpers"
 import { useState } from "react"
-import { Form, Input, Button, Row, Col, Card, Space, Typography } from "antd"
+import { Form, Input, Button, Row, Col, Card, Space, Typography, message } from "antd"
 
 const { Text } = Typography
 
 const DaySection = ({ formData, setDay }) => {
+      const [messageApi, contextHolder] = message.useMessage();
+
     const [currentDay, setCurrentDay] = useState({
         dayNumber: "",
         description: "",
@@ -13,7 +15,14 @@ const DaySection = ({ formData, setDay }) => {
     console.log(currentDay);
     console.log(formData);
     const handleAdd = () => {
-        if (!currentDay.title) return;
+        if(formData.duration.days >= formData.days.length){
+            messageApi.warning('you should add some more days')
+            return 0
+        }
+        if (!currentDay.title) {
+            messageApi.warning('added title')
+            return 0
+        }
 
         if (formData.days.length < formData.duration.days) {
             const newDays = [...formData.days, { ...currentDay }];
@@ -27,6 +36,8 @@ const DaySection = ({ formData, setDay }) => {
         setDay("days", newDays);
     }
     return (
+        <>
+        {contextHolder}
         <Section title="Программа тура (Дни)">
             <div style={{ marginBottom: 20 }}>
                 {formData.days.map((item, index) => (
@@ -87,6 +98,7 @@ const DaySection = ({ formData, setDay }) => {
                 + Добавить день в программу
             </Button>
         </Section>
+        </>
     )
 }
 

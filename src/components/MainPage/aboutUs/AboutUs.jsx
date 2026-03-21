@@ -14,7 +14,7 @@ const AboutUs = () => {
   }
 
   return <>
-    <main className='flex justify-center flex-col items-center mt-170 md:mt-110 lg:mt-96 xl:mt-80 gap-8 px-4 mb-12' id="about">
+    <main className='flex justify-center flex-col items-center gap-8 px-4 mb-12' id="about">
       <div className='text-center'>
         <h1 className='font-bold text-4xl md:text-5xl text-gray-800 mb-3'>About Us</h1>
         <div className="h-1 w-24 bg-blue-500 rounded mx-auto"></div>

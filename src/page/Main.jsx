@@ -22,33 +22,39 @@ const Main = () => {
     return () => clearTimeout(t);
   }, []);
 
-  return <>
-  <Header isVisibility={false}></Header>
-  <Banner/>
-  <AboutUs/>
-  <BestTour/>
-  {showBelowFold ? (
-    <Suspense fallback={<div className="mt-16 px-4 py-12 bg-gray-50" />}>
-      <Testimonials/>
-    </Suspense>
-  ) : (
-    <div className="mt-16 px-4 py-12 bg-gray-50" />
-  )}
-  <BestTour text="Winter tours" season='winter'/>
-  {showBelowFold ? (
-    <Suspense fallback={<div className="mt-16 px-4 py-12 bg-gray-100" />}>
-      <QuestionsAnswer/>
-    </Suspense>
-  ) : (
-    <div className="mt-16 px-4 py-12 bg-gray-100" />
-  )}
-  {showBelowFold ? (
-    <Suspense fallback={null}>
-      <Booking/>
-      <Footer/>
-    </Suspense>
-  ) : null}
-  </>
-}
+  return (
+    <>
+      <Header isVisibility={false} />
+      <Banner />
+      <AboutUs />
+      <BestTour />
 
-export default Main
+      {showBelowFold ? (
+        <Suspense fallback={<div className="mt-16 px-4 py-12 bg-gray-50" />}>
+          <Testimonials />
+        </Suspense>
+      ) : (
+        <div className="mt-16 px-4 py-12 bg-gray-50" />
+      )}
+
+      <BestTour text="Winter tours" season="winter" />
+
+      {showBelowFold ? (
+        <Suspense fallback={<div className="mt-16 px-4 py-12 bg-gray-100" />}>
+          <QuestionsAnswer />
+        </Suspense>
+      ) : (
+        <div className="mt-16 px-4 py-12 bg-gray-100" />
+      )}
+
+      {showBelowFold ? (
+        <Suspense fallback={null}>
+          <Booking />
+          <Footer />
+        </Suspense>
+      ) : null}
+    </>
+  );
+};
+
+export default Main;

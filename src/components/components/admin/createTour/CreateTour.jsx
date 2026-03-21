@@ -33,6 +33,7 @@ const CreateTour = () => {
       }))
     }
   }
+  
   const setDay = (path, value) => {
     setFormData((prev) => {
       const keys = path.split(".");
@@ -51,19 +52,25 @@ const CreateTour = () => {
       return newDeepCopy;
     });
   };
+  
   const onFinish = async () => {
-  try {
-    const key = localStorage.getItem('secretKey')
-    const res = await api.post(`/createTour?secretKey=${key}`, formData)
-    console.log("Tour created:", res.data)
-    message.success("Тур успешно создан!")
-    form.resetFields()
-    setFormData(iNITIAL_TOUR_DATA)
-  } catch (err) {
-    console.error(err)
-    message.error(err.response?.data?.error || "Ошибка создания тура")
+    try {
+      if (formData.days.length < formData.duration.days) {
+        message.warning(`Необходимо добавить ${formData.duration.days} дней. Сейчас добавлено: ${formData.days.length}`)
+        return
+      }
+      
+      const key = localStorage.getItem('secretKey')
+      const res = await api.post(`/createTour?secretKey=${key}`, formData)
+      console.log("Tour created:", res.data)
+      message.success("Тур успешно создан!")
+      form.resetFields()
+      setFormData(iNITIAL_TOUR_DATA)
+    } catch (err) {
+      console.error(err)
+      message.error(err.response?.data?.error || "Ошибка создания тура")
+    }
   }
-}
 
   const onFinishFailed = ({ errorFields }) => {
     console.log("Validation errors:", errorFields)
@@ -71,6 +78,7 @@ const CreateTour = () => {
 
   const props = { formData, set }
   const dayProps = { formData, setDay }
+  
   return (
     <div style={{ maxWidth: 900, margin: "0 auto", padding: "32px 16px" }}>
       <Title level={3} style={{ marginBottom: 32 }}>
